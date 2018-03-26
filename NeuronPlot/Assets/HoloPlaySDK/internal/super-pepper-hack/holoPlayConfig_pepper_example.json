@@ -1,0 +1,77 @@
+{
+    "pitch": {
+        "value": 50.07006072998047
+    },
+    "slope": {
+        "value": 6.052906513214111
+    },
+    "center": {
+        "value": 0.6514880657196045
+    },
+    "viewCone": {
+        "value": -40.0
+    },
+    "verticalAngle": {
+        "value": 0.0
+    },
+    "numViews": {
+        "value": 32.0
+    },
+    "DPI": {
+        "value": 283.0
+    },
+    "screenW": {
+        "value": 3840.0
+    },
+    "screenH": {
+        "value": 2160.0
+    },
+    "flipImage": {
+        "value": 0.0
+    },
+    "flipImageY": {
+        "value": 1.0
+    },
+    "flipSubp": {
+        "value": 0.0
+    },
+    "test": {
+        "value": 0.0
+    },
+    "realsense": {
+        "_xMin": 3.0,
+        "_xMax": -3.0,
+        "_yMin": 4000.0,
+        "_yMax": -2000.0,
+        "_zMin": 2.0,
+        "_zMax": -2.0,
+        "xAngle": -15.0,
+        "offset": {
+            "x": 0.0,
+            "y": -500.0,
+            "z": 0.0
+        }
+    },
+    "pepper": {
+        "value": 1.0
+    },
+    "pepperThreshold": {
+        "value": 2000.0
+    },
+    "pepperMinTipWidth": {
+        "value": 25.0
+    },
+    "pepperScale": {
+        "x": 5.5,
+        "y": 4.0,
+        "z": 9.0
+    },
+    "xBounds": [
+        40,
+        600
+    ],
+    "yBounds": [
+        10,
+        460
+    ]
+}
