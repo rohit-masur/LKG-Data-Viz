@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Graph : MonoBehaviour {
 
@@ -9,7 +10,12 @@ public class Graph : MonoBehaviour {
 	public Transform pointTwoSpkiePrefab;
 	public Transform pointThreeSpkiePrefab;
     public int dataCount;
+	public Text dataStartText;  
+	public Text dataEndText; 
+	public Text dataSpikesText;
 
+	private int maxRange =10;
+	private int noOfSpikes=0;
 	private float xval;
 	private float yval;
 	private float nspk;
@@ -27,7 +33,16 @@ public class Graph : MonoBehaviour {
 	private float updivvalue = 10000;
     private List<Dictionary<string, object>> data;
 
-
+	void showRange(int range, int spikes){
+		
+		int tillRange = range + maxRange -1;
+		string startingPoint = range.ToString ();
+		string end = tillRange.ToString ();
+		dataStartText.text = "Datapoints: "+ startingPoint;
+		dataEndText.text = " till " + end;
+		dataSpikesText.text = "Total Spikes: "+ spikes.ToString();
+	}
+		
     public  void Slider_Changed(float newCount)
       {
         Debug.Log("SliderData is " + newCount);
@@ -41,7 +56,7 @@ public class Graph : MonoBehaviour {
 	void Awake () {
         data = CSVReader.Read("brain_data");
         //	StartCoroutine (VisGraph());
-        VisGraph(10);
+        VisGraph(1);
 	
 	}
 
@@ -53,15 +68,11 @@ public class Graph : MonoBehaviour {
     }
 
 	public void  VisGraph(int sliderData){
-        
-		
-		Debug.Log (data.Count);
-        Debug.Log("SliderData is "+ sliderData);
 
-        for (int i = 0; i < sliderData; i++) {
-		//	Debug.Log ("before");
-		
-			Debug.Log ("after");
+        Debug.Log("In VisGraph_SliderData is "+ sliderData);
+
+		for (int i = sliderData; i < sliderData +10; i++) {
+
 
 			xval = float.Parse(data[i]["xval"].ToString());
 			yval = float.Parse(data[i]["yval"].ToString());
@@ -69,15 +80,18 @@ public class Graph : MonoBehaviour {
 
 			if (nspk == 1) {
 				ntime = float.Parse (data [i] ["ntime"].ToString ());
+
 			}
 			if (nspk == 2) {
 				ntime = float.Parse (data [i] ["ntime"].ToString ());
 				ntime2 = float.Parse (data [i] ["ntime2"].ToString ());
+
 			}
 			if (nspk == 3) {
 				ntime = float.Parse (data [i] ["ntime"].ToString ());
 				ntime2 = float.Parse (data [i] ["ntime2"].ToString ());
 				ntime3 = float.Parse (data [i] ["ntime3"].ToString ());
+
 			}
 
 
@@ -95,12 +109,14 @@ public class Graph : MonoBehaviour {
 
 			if (nspk == 1) {
 
+				noOfSpikes++;
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointOneSpkiePrefab, vect3intensity, Quaternion.identity);
 			}
 			if (nspk == 2) {
 
+				noOfSpikes+=2;
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointTwoSpkiePrefab, vect3intensity, Quaternion.identity);
@@ -108,13 +124,16 @@ public class Graph : MonoBehaviour {
 
 			if (nspk == 3) {
 
+				noOfSpikes+=3;
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointThreeSpkiePrefab, vect3intensity, Quaternion.identity);
 			}
 
 		}
-	
+
+		showRange(sliderData, noOfSpikes);
+		noOfSpikes = 0;
 	}
 	
 
