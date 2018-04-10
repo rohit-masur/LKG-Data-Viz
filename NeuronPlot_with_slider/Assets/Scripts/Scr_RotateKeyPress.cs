@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloPlaySDK;
 
-public class Scr_RotateKeyPress : MonoBehaviour {
+public class Scr_RotateKeyPress : MonoBehaviour
+{
 
     private HoloPlay HoloScript;
     public GameObject RealHolo;
@@ -17,7 +18,8 @@ public class Scr_RotateKeyPress : MonoBehaviour {
     }
 
 
-    void FixedUpdate () {
+    void FixedUpdate()
+    {
 
         if (Input.GetKey("left"))
         {
@@ -31,16 +33,39 @@ public class Scr_RotateKeyPress : MonoBehaviour {
 
         if (Input.GetKey("up"))
         {
-            HoloScript.size = HoloScript.size + 0.95f;
+            transform.position = new Vector3(transform.position.x, (transform.position.y + (5 * Time.deltaTime)), transform.position.z);
+            //transform.Rotate(Vector3.up * -100 * Time.deltaTime);
         }
 
         if (Input.GetKey("down"))
         {
+            transform.position = new Vector3(transform.position.x, (transform.position.y - (5 * Time.deltaTime)), transform.position.z);
+            //HoloScript.size = HoloScript.size - 0.95f;
+        }
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            Debug.Log("Usage:");
             HoloScript.size = HoloScript.size - 0.95f;
         }
 
-     //   if (HoloScript.size > zoommax) { HoloScript.size = zoommax; }
-     //   if (HoloScript.size < zoommin) { HoloScript.size = zoommin; }
+        if (Input.GetKey(KeyCode.S))
+        {
+            HoloScript.size = HoloScript.size + 0.95f;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(Vector3.left * 100 * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(Vector3.left * -100 * Time.deltaTime);
+        }
+
+        //   if (HoloScript.size > zoommax) { HoloScript.size = zoommax; }
+        //   if (HoloScript.size < zoommin) { HoloScript.size = zoommin; }
 
     }
 

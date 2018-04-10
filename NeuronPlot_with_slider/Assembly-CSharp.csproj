@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{3CF3EA9C-D7B2-BD0E-BC18-BB7CE11DDC3F}</ProjectGuid>
+    <ProjectGuid>{7D1D4CE5-725D-C159-475A-BEAC18C4F484}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\CSVReader.cs" />
      <Compile Include="Assets\Scripts\Graph.cs" />
      <Compile Include="Assets\Scripts\Scr_RotateKeyPress.cs" />
+     <Compile Include="Assets\Scripts\Slider.cs" />
      <None Include="Assets\HoloPlaySDK\internal\Resources\HoloPlayShader.shader" />
      <None Include="Assets\ColoredPoint.shader" />
      <None Include="Assets\HoloPlaySDK\license.txt" />
