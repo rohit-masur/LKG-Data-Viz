@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio for Mac
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuronPlot_Parth", "NeuronPlot_Parth.csproj", "{4ED550B9-426D-163F-1C97-81F212476186}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuronPlot_Parth.Editor", "NeuronPlot_Parth.Editor.csproj", "{5A37EFB4-3332-EBF1-C0CB-32C2805AA289}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4ED550B9-426D-163F-1C97-81F212476186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED550B9-426D-163F-1C97-81F212476186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED550B9-426D-163F-1C97-81F212476186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED550B9-426D-163F-1C97-81F212476186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A37EFB4-3332-EBF1-C0CB-32C2805AA289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A37EFB4-3332-EBF1-C0CB-32C2805AA289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A37EFB4-3332-EBF1-C0CB-32C2805AA289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A37EFB4-3332-EBF1-C0CB-32C2805AA289}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
