@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class Graph : MonoBehaviour {
 
@@ -13,15 +14,17 @@ public class Graph : MonoBehaviour {
 	public Text dataStartText;  
 	public Text dataEndText; 
 	public Text dataSpikesText;
+	public Text dataTimeInSeconds;
 
 	private int maxRange =10;
 	private int noOfSpikes=0;
 	private float xval;
 	private float yval;
 	private float nspk;
-	private float ntime;
+	private float ntime = 0.0f;
 	private float ntime2;
 	private float ntime3;
+	private float timeSec;
 	private Vector3 vect3xy;
 	private Vector3 temp;
 	private Vector3 vect3intensity;
@@ -32,20 +35,28 @@ public class Graph : MonoBehaviour {
 	private float offsetvalue = 50;
 	private float updivvalue = 10000;
     private List<Dictionary<string, object>> data;
+	private ArrayList timeOfSpike = new ArrayList();
 
-	void showRange(int range, int spikes){
+	void showRange(int range, int spikes, string times){
 		
 		int tillRange = range + maxRange -1;
 		string startingPoint = range.ToString ();
 		string end = tillRange.ToString ();
 		dataStartText.text = "Datapoints: "+ startingPoint;
-		dataEndText.text = " till " + end;
+		dataEndText.text = " to " + end;
 		dataSpikesText.text = "Total Spikes: "+ spikes.ToString();
+
+		if (!(string.IsNullOrEmpty (times))) {
+			dataTimeInSeconds.text = "Time of spikes: " + times;
+		} else {
+			dataTimeInSeconds.text = string.Empty;
+		}
+
 	}
 		
     public  void Slider_Changed(float newCount)
       {
-        Debug.Log("SliderData is " + newCount);
+    //    Debug.Log("SliderData is " + newCount);
 
         int count = (int)newCount;
         //int count = newCount as int;
@@ -67,9 +78,38 @@ public class Graph : MonoBehaviour {
             GameObject.Destroy(enemy);
     }
 
+	public void DestroyTimeList(ArrayList arr){
+		for (int i = 0; i < arr.Count; i++) {
+			timeOfSpike.RemoveAt (i);
+		}
+	}
+
+	public string CreateStringOfTime(ArrayList arr){
+	
+
+		StringBuilder sb = new StringBuilder();
+		char[] MyChar = { ',', ' ' };
+
+		for (int i = 0; i < arr.Count; i++) {
+		
+			sb.Append (arr [i].ToString());
+			sb.Append ("s, ");
+
+		}
+		string newString = sb.ToString().TrimEnd(MyChar);
+		return newString;
+	}
+
+	public float Truncate(float value, int digits)
+	{
+		double mult = Math.Pow(10.0, digits);
+		double result = Math.Truncate( mult * value ) / mult;
+		return (float) result;
+	}
+
 	public void  VisGraph(int sliderData){
 
-        Debug.Log("In VisGraph_SliderData is "+ sliderData);
+   //     Debug.Log("In VisGraph_SliderData is "+ sliderData);
 
 		for (int i = sliderData; i < sliderData +10; i++) {
 
@@ -108,8 +148,10 @@ public class Graph : MonoBehaviour {
 			}
 
 			if (nspk == 1) {
-
+				
 				noOfSpikes++;
+				timeSec = ntime / 10000;
+				timeOfSpike.Add (timeSec);
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointOneSpkiePrefab, vect3intensity, Quaternion.identity);
@@ -117,6 +159,8 @@ public class Graph : MonoBehaviour {
 			if (nspk == 2) {
 
 				noOfSpikes+=2;
+				timeOfSpike.Add (ntime / 10000);
+				timeOfSpike.Add (ntime2 / 10000);
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointTwoSpkiePrefab, vect3intensity, Quaternion.identity);
@@ -125,6 +169,9 @@ public class Graph : MonoBehaviour {
 			if (nspk == 3) {
 
 				noOfSpikes+=3;
+				timeOfSpike.Add (ntime / 10000);
+				timeOfSpike.Add (ntime2 / 10000);
+				timeOfSpike.Add (ntime3 / 10000);
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointThreeSpkiePrefab, vect3intensity, Quaternion.identity);
@@ -132,7 +179,9 @@ public class Graph : MonoBehaviour {
 
 		}
 
-		showRange(sliderData, noOfSpikes);
+		string times = CreateStringOfTime (timeOfSpike);
+		showRange(sliderData, noOfSpikes,times);
+		DestroyTimeList (timeOfSpike);
 		noOfSpikes = 0;
 	}
 	
