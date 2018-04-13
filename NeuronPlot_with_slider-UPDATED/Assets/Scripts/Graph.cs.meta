@@ -1,11 +1,27 @@
 fileFormatVersion: 2
 guid: 4361735224e864192adf3113089a1035
-timeCreated: 1521259621
+timeCreated: 1523628831
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pointPrefab: {instanceID: 0}
+  - pointOneSpkiePrefab: {instanceID: 0}
+  - pointTwoSpkiePrefab: {instanceID: 0}
+  - pointThreeSpkiePrefab: {instanceID: 0}
+  - dataStartText: {instanceID: 0}
+  - dataEndText: {instanceID: 0}
+  - dataSpikesText: {instanceID: 0}
+  - dataTimeInSeconds: {instanceID: 0}
+  - dataTimeInSecondsLow: {instanceID: 0}
+  - dataTimeInSecondsMedium: {instanceID: 0}
+  - dataTimeInSecondsHigh: {instanceID: 0}
+  - dataLow: {instanceID: 0}
+  - dataHigh: {instanceID: 0}
+  - dataMedium: {instanceID: 0}
+  - spikePrefab: {fileID: 4377744243617034, guid: 254d6dca285984068aaaadfc9b51ca6c,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

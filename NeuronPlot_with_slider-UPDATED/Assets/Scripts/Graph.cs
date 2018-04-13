@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,6 +51,8 @@ public class Graph : MonoBehaviour {
 	private ArrayList timeOfSpikeLow = new ArrayList();
 	private ArrayList timeOfSpikeMedium = new ArrayList();
 	private ArrayList timeOfSpikeHigh = new ArrayList();
+	
+	public Transform spikePrefab;
 
 
 
@@ -80,9 +82,9 @@ public class Graph : MonoBehaviour {
 		} else {
 			dataTimeInSecondsHigh.text = string.Empty;
 		}
-		dataLow.text = "L: "+low.ToString ();
-		dataMedium.text = "M: "+medium.ToString ();
-		dataHigh.text = "H: "+high.ToString ();
+		dataLow.text = "L: "+ low.ToString ();
+		dataMedium.text = "M: "+ medium.ToString ();
+		dataHigh.text = "H: "+ high.ToString ();
 
 
 	}
@@ -94,6 +96,7 @@ public class Graph : MonoBehaviour {
         int count = (int)newCount;
         //int count = newCount as int;
         DestroyGraph();
+		DestroySpikes ();
         VisGraph(count);
       }
 
@@ -165,13 +168,13 @@ public class Graph : MonoBehaviour {
 			yval = yval * condensevalue;
 
 		//	yield return new WaitForSeconds (0.01f);
-			Vector3 vect3xy = new Vector3(xval, transform.position.y, yval);
+			Vector3 vect3xy = new Vector3(xval, 0, yval);
 
-			if (xval > 0 && yval > 0)
-			{
+//			if (xval > 0 && yval > 0)
+//			{
 
 				Instantiate(pointPrefab, vect3xy, Quaternion.identity);
-			}
+//			}
 
 			if (nspk == 1) {
 				
@@ -183,6 +186,7 @@ public class Graph : MonoBehaviour {
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointOneSpkiePrefab, vect3intensity, Quaternion.identity);
+				CreateSpike (xval, yval, nspikeVal);
 			}
 			if (nspk == 2) {
 
@@ -195,6 +199,7 @@ public class Graph : MonoBehaviour {
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointTwoSpkiePrefab, vect3intensity, Quaternion.identity);
+				CreateSpike (xval, yval, nspikeVal);
 			}
 
 			if (nspk == 3) {
@@ -207,6 +212,7 @@ public class Graph : MonoBehaviour {
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
 				Instantiate (pointThreeSpkiePrefab, vect3intensity, Quaternion.identity);
+				CreateSpike (xval, yval, nspikeVal);
 			}
 
 		}
@@ -223,6 +229,33 @@ public class Graph : MonoBehaviour {
 		lowSpikes = 0;
 		mediumSpikes = 0;
 		highSpikes = 0;
+	}
+
+	private void CreateSpike (float x, float z, float y) 
+	{
+
+//		Debug.Log("coming inside loop" + y);
+//		float step = 10f / resolution;
+		Vector3 scale = Vector3.one * condensevalue;
+		int tempY = (int) y;
+		Vector3 position;
+		position.z = 0f;
+		for (int i = 1; i <= tempY; i++) {
+		//	Debug.Log("coming inside loop" + i);
+			Transform point = Instantiate (spikePrefab);
+			//			position.x = (i + 0.5f) * step - 1f;
+			position.x = x;
+			position.z = z;
+			position.y = i;
+			point.localPosition = position;
+			//			point.localScale = scale;
+		}
+	}
+
+	private void DestroySpikes() {
+		GameObject[] spikes = GameObject.FindGameObjectsWithTag("spike");
+		foreach (GameObject spike in spikes)
+			GameObject.Destroy(spike);
 	}
 	
 

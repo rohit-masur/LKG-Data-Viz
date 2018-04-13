@@ -20,17 +20,18 @@ public class Scr_RotateKeyPress : MonoBehaviour
 
     void FixedUpdate()
     {
-
+		// Movement across X
         if (Input.GetKey("left"))
         {
-            transform.Rotate(Vector3.up * 100 * Time.deltaTime);
+			transform.position = new Vector3(transform.position.x - (5 * Time.deltaTime), (transform.position.y), transform.position.z);
         }
 
         if (Input.GetKey("right"))
         {
-            transform.Rotate(Vector3.up * -100 * Time.deltaTime);
+			transform.position = new Vector3(transform.position.x + (5 * Time.deltaTime), (transform.position.y), transform.position.z);
         }
 
+		// Movement across Y
         if (Input.GetKey("up"))
         {
             transform.position = new Vector3(transform.position.x, (transform.position.y + (5 * Time.deltaTime)), transform.position.z);
@@ -43,26 +44,48 @@ public class Scr_RotateKeyPress : MonoBehaviour
             //HoloScript.size = HoloScript.size - 0.95f;
         }
 
-        if (Input.GetKey(KeyCode.W))
+		// Movement across Z
+//		if (Input.GetKey("left"))
+//		{
+//			transform.position = new Vector3(transform.position.x - (5 * Time.deltaTime), (transform.position.y), transform.position.z);
+//		}
+//
+//		if (Input.GetKey("right"))
+//		{
+//			transform.position = new Vector3(transform.position.x + (5 * Time.deltaTime), (transform.position.y), transform.position.z);
+//		}
+
+
+        if (Input.GetKey(KeyCode.Z))
         {
             Debug.Log("Usage:");
             HoloScript.size = HoloScript.size - 0.95f;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.X))
         {
             HoloScript.size = HoloScript.size + 0.95f;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.W))
         {
-            transform.Rotate(Vector3.left * 100 * Time.deltaTime);
+            transform.Rotate(Vector3.left * 10 * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.S))
         {
-            transform.Rotate(Vector3.left * -100 * Time.deltaTime);
+            transform.Rotate(Vector3.left * -10 * Time.deltaTime);
         }
+
+		if (Input.GetKey(KeyCode.A))
+		{
+			transform.Rotate(Vector3.up * 100 * Time.deltaTime);
+		}
+
+		if (Input.GetKey(KeyCode.D))
+		{
+			transform.Rotate(Vector3.up * -100 * Time.deltaTime);
+		}
 
         //   if (HoloScript.size > zoommax) { HoloScript.size = zoommax; }
         //   if (HoloScript.size < zoommin) { HoloScript.size = zoommin; }
