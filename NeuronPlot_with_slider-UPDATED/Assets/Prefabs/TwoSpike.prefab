@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4096343535047250}
   - component: {fileID: 33755368064766958}
   - component: {fileID: 23579543137987514}
+  - component: {fileID: 114301938198965830}
   m_Layer: 0
   m_Name: TwoSpike
   m_TagString: clone
@@ -82,3 +83,14 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1638255864673198}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114301938198965830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638255864673198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceec67c82547740788083156ff8fca15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
