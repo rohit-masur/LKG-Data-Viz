@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33641380773547278}
   - component: {fileID: 135317136422954506}
   - component: {fileID: 23503056537903848}
+  - component: {fileID: 114963352064728678}
   m_Layer: 0
   m_Name: ThreeSpike
   m_TagString: clone
@@ -83,6 +84,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1117743053121222}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114963352064728678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117743053121222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceec67c82547740788083156ff8fca15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135317136422954506
 SphereCollider:
   m_ObjectHideFlags: 1

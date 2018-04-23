@@ -1,11 +1,8 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
-//public class Slider : MonoBehaviour {
-
-
-//    int newCount = Graph.getCount();
-
-//    public void Slider_Changed(int newCount) //    { //        Graph //    } 
-//}
+public class Slider : MonoBehaviour {
+ 
+}
