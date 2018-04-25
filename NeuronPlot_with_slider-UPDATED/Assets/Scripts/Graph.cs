@@ -21,19 +21,25 @@ public class Graph : MonoBehaviour {
 	public Text dataTimeInSecondsLow;
 	public Text dataTimeInSecondsMedium;
 	public Text dataTimeInSecondsHigh;
+	public Text dataSelectedTime;
 	public Text dataLow;
 	public Text dataHigh;
 	public Text dataMedium;
 	public int maxRange;
 	public float maxTimeInSeconds;
-	public Slider mySlider;
+	public Text dataStartTimeInSeconds;
+	public Text dataEndTimeInSeconds;
+
 
 
 	private int noOfSpikes=0;
 	private int lowSpikes = 0;
 	private int mediumSpikes = 0;
 	private int highSpikes = 0;
+	private int startTimeSec =0;
+	private int endTimeSec =0;
 
+	private Slider timeFrameSlider;
 	private float nstime;
 	private float mstime;
 	private float xval;
@@ -58,9 +64,9 @@ public class Graph : MonoBehaviour {
 	public Transform spikePrefab;
 
 
-	void showRange(int range, int spikes, int low, int high, int medium, string timesLow, string timesMedium, string timesHigh){
+	void showRange(int range, int tillRange, int spikes, int low, int high, int medium, string timesLow, string timesMedium, string timesHigh){
 		
-		int tillRange = range + maxRange -1;
+	//	int tillRange = range + maxRange -1;
 		string startingPoint = range.ToString ();
 		string end = tillRange.ToString ();
 		dataStartText.text = "Datapoints: "+ startingPoint;
@@ -90,43 +96,46 @@ public class Graph : MonoBehaviour {
 
 
 	}
-
-
-	public void Slider_Value(){
-	
-	}
-
 		
     public  void Slider_Changed(float newCount)
       {
    
         int count = (int)newCount;
-		Debug.Log("normal");
         DestroyGraph();
 		DestroySpikes ();
+		ShowStaticGraph ();
         VisGraph(count);
+		TimeSlider.setValue ();
       }
 
 	public void TimeSlider_Changed(float newTime){
 
-		Debug.Log (newTime);
-		Debug.Log (nstime);
-		Debug.Log (mstime);
+		TimeSlider.setMinMax (startTimeSec, endTimeSec);
+		int val = TimeSlider.getValue ();
+		dataSelectedTime.text = val.ToString ();
 
-		if(newTime < nstime || newTime <  mstime){
-		//	DestroyGraph ();
-		//	DestroySpikes ();
-		//	VisGraph (newTime, newTime + maxTimeInSeconds);
+		int maxPoint = Mathf.FloorToInt((((val * 100) / 3)));
+		int minPoint = Mathf.FloorToInt((((startTimeSec * 100) / 3)));
 
-		}
+
+		DestroyGraph ();
+		DestroySpikes ();
+		DestroyStaticPoints ();
+
+		VisGraph (minPoint, maxPoint);
+
 
 	}
+		
 
 	void Awake () {
         data = CSVReader.Read("brain_data");
-        //	StartCoroutine (VisGraph());
+
 		ShowStaticGraph ();
         VisGraph(1);
+
+		int end = (int)(maxRange * 0.03f);
+		TimeSlider.setMinMax (0, end+1);
 	
 	}
 
@@ -135,6 +144,8 @@ public class Graph : MonoBehaviour {
         foreach (GameObject enemy in enemies)
             GameObject.Destroy(enemy);
     }
+
+
 
 	public void DestroyTimeList(ArrayList arr){
 		for (int i = 0; i < arr.Count; i++) {
@@ -177,6 +188,12 @@ public class Graph : MonoBehaviour {
 
 	public void  VisGraph(int sliderData){
 		for (int i = sliderData; i < sliderData +maxRange; i++) {
+
+			startTimeSec = (int)(sliderData * 0.03f);
+		    endTimeSec = (int)((sliderData + maxRange) * 0.03f);
+
+			dataStartTimeInSeconds.text = startTimeSec.ToString();
+			dataEndTimeInSeconds.text = endTimeSec.ToString();
 
 			xval = float.Parse(data[i]["xval"].ToString());
 			yval = float.Parse(data[i]["yval"].ToString());
@@ -248,7 +265,8 @@ public class Graph : MonoBehaviour {
 		string timesMedium = CreateStringOfTime (timeOfSpikeMedium);
 		string timesHigh = CreateStringOfTime (timeOfSpikeHigh);
 
-		showRange(sliderData, noOfSpikes,lowSpikes,highSpikes,mediumSpikes,timesLow,timesMedium,timesHigh);
+		int tillRange = sliderData + maxRange - 1;
+		showRange(sliderData, tillRange, noOfSpikes,lowSpikes,highSpikes,mediumSpikes,timesLow,timesMedium,timesHigh);
 
 		DestroyTimeList (timeOfSpikeLow);
 		DestroyTimeList (timeOfSpikeMedium);
@@ -259,13 +277,22 @@ public class Graph : MonoBehaviour {
 		highSpikes = 0;
 	}
 
-	public void  VisGraph(float minTime, float maxtime){
 
-		int startTime = (int)minTime;
-		int endTime = (int)maxtime;
 
-		for (int i = startTime; i < endTime; i++) {
+	public void  VisGraph(int minTime, int maxtime){
 
+		float alpha = 0.0f;
+		bool flag = false;
+		int midP = (maxtime - minTime) / 2;
+		int mid = minTime + midP;
+		int d = 0;
+		float[] arr = new float[mid +1];
+		int l = 0;
+
+
+
+		for (int i = minTime; i < maxtime; i++) {
+			d++;
 			xval = float.Parse(data[i]["xval"].ToString());
 			yval = float.Parse(data[i]["yval"].ToString());
 			nspk = float.Parse(data[i]["nspk"].ToString());
@@ -292,8 +319,27 @@ public class Graph : MonoBehaviour {
 
 			Vector3 vect3xy = new Vector3(xval, 0, yval);
 
+			Datapoint.setDataPointColor ();
 
-			Instantiate(pointPrefab, vect3xy, Quaternion.identity);
+			if (alpha < 1 && flag == false) {
+				alpha = (float)d / (float)midP;
+				arr [l] = alpha;
+			//	Debug.Log (alpha);
+				l++;
+			} 
+
+			else {
+				
+				flag = true;
+				alpha = arr [l];
+				l--;
+			//	Debug.Log (alpha);
+
+			}
+
+			Datapoint.setDataPointColor (alpha);
+
+			Instantiate(staticPointPrefab, vect3xy, Quaternion.identity);
 
 			if (nspk == 1) {
 
@@ -303,6 +349,7 @@ public class Graph : MonoBehaviour {
 				timeOfSpikeLow.Add (timeSec);
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
+				Spike.setColor (alpha);
 				Instantiate (pointOneSpkiePrefab, vect3intensity, Quaternion.identity);
 				CreateSpike (xval, yval, nspikeVal);
 			}
@@ -313,6 +360,7 @@ public class Graph : MonoBehaviour {
 				timeOfSpikeMedium.Add(((ntime+ntime2)/2)/10000);
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
+				Spike.setColor (alpha);
 				Instantiate (pointTwoSpkiePrefab, vect3intensity, Quaternion.identity);
 				CreateSpike (xval, yval, nspikeVal);
 			}
@@ -324,30 +372,22 @@ public class Graph : MonoBehaviour {
 				timeOfSpikeHigh.Add (((ntime+ntime2+ntime3)/3)/10000);
 				nspikeVal = nspk * nspikeCondenseValue;
 				Vector3 vect3intensity = new Vector3(xval , nspikeVal, yval);
+				Spike.setColor (alpha);
 				Instantiate (pointThreeSpkiePrefab, vect3intensity, Quaternion.identity);
 				CreateSpike (xval, yval, nspikeVal);
 			}
+
 
 		}
 
 		string timesLow = CreateStringOfTime (timeOfSpikeLow);
 		string timesMedium = CreateStringOfTime (timeOfSpikeMedium);
-//		string timesHigh = CreateStringOfTime (timeOfSpikeHigh);
+		string timesHigh = CreateStringOfTime (timeOfSpikeHigh);
 
-	//	showRange(startTime	, noOfSpikes,lowSpikes,highSpikes,mediumSpikes,timesLow,timesMedium,timesHigh);
 
-		/*
-		GameObject temp = GameObject.Find("Slider Time");
-		if (temp != null) {
-			// Get the Slider Component
-			mySlider = temp.GetComponent<Slider> ();
+		showRange(minTime, maxtime, noOfSpikes,lowSpikes,highSpikes,mediumSpikes,timesLow,timesMedium,timesHigh);
 
-			if (mySlider != null) {
-				mySlider.minValue = sliderData * 0.03f;
-				mySlider.maxValue = (sliderData+maxRange) * 0.03f;
-			}
-		}
-		*/
+
 
 		DestroyTimeList (timeOfSpikeLow);
 		DestroyTimeList (timeOfSpikeMedium);
@@ -373,10 +413,16 @@ public class Graph : MonoBehaviour {
 		}
 	}
 
-	private void DestroySpikes() {
+	public void DestroySpikes() {
 		GameObject[] spikes = GameObject.FindGameObjectsWithTag("spike");
 		foreach (GameObject spike in spikes)
 			GameObject.Destroy(spike);
+	}
+
+	public void DestroyStaticPoints() {
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("staticpoint");
+		foreach (GameObject enemy in enemies)
+			GameObject.Destroy(enemy);
 	}
 	
 
