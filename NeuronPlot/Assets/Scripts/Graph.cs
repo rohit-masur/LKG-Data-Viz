@@ -35,7 +35,7 @@ public class Graph : MonoBehaviour {
 		List<Dictionary<string, object>> data = CSVReader.Read("brain_data");
 		Debug.Log (data.Count);
 
-		for (int i = 0; i < 1500; i++) {
+		for (int i = 0; i < 4000; i++) {
 		//	Debug.Log ("before");
 		
 			Debug.Log ("after");
@@ -61,7 +61,7 @@ public class Graph : MonoBehaviour {
 			xval = xval * condensevalue;
 			yval = yval * condensevalue;
 
-			yield return new WaitForSeconds (0.01f);
+			yield return new WaitForSeconds (0.0f);
 			Vector3 vect3xy = new Vector3(xval, transform.position.y, yval);
 
 			if (xval > 0 && yval > 0)

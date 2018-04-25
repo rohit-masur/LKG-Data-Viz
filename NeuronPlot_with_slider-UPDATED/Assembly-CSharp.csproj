@@ -90,6 +90,7 @@
      <Compile Include="Assets\Scripts\Scr_RotateKeyPress.cs" />
      <Compile Include="Assets\Scripts\Slider.cs" />
      <Compile Include="Assets\Scripts\Spike.cs" />
+     <Compile Include="Assets\Scripts\TimeSlider.cs" />
      <None Include="Assets\HoloPlaySDK\internal\Resources\HoloPlayShader.shader" />
      <None Include="Assets\shader\ColoredPoint.shader" />
      <None Include="Assets\HoloPlaySDK\license.txt" />
