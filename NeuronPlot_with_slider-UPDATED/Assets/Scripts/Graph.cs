@@ -25,6 +25,7 @@ public class Graph : MonoBehaviour {
 	public Text dataLow;
 	public Text dataHigh;
 	public Text dataMedium;
+    public Text rotatationText;
 	public int maxRange;
 	public float maxTimeInSeconds;
 	public Text dataStartTimeInSeconds;
@@ -126,7 +127,24 @@ public class Graph : MonoBehaviour {
 
 
 	}
-		
+
+    public void Toggle_Changed(bool check){
+
+        ChangeDetails(check);
+    }
+
+    private void ChangeDetails(bool mark){
+        dataStartText.gameObject.SetActive(mark);
+        dataEndText.gameObject.SetActive(mark);
+        dataSpikesText.gameObject.SetActive(mark);
+        dataTimeInSecondsLow.gameObject.SetActive(mark);
+        dataTimeInSecondsMedium.gameObject.SetActive(mark);
+        dataTimeInSecondsHigh.gameObject.SetActive(mark);
+        dataLow.gameObject.SetActive(mark);
+        dataMedium.gameObject.SetActive(mark);
+        dataHigh.gameObject.SetActive(mark);
+        rotatationText.gameObject.SetActive(mark);
+    }
 
 	void Awake () {
         data = CSVReader.Read("brain_data");
